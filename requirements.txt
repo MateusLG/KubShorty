@@ -1,0 +1,17 @@
+# /requirements.txt
+
+# --- Framework Principal ---
+fastapi
+
+# --- Servidor ASGI para rodar o FastAPI ---
+uvicorn[standard]
+
+# --- ORM (Banco de Dados) ---
+sqlalchemy
+psycopg2-binary
+
+# --- Cache ---
+redis
+
+# --- Configuração (para ler .env) ---
+pydantic-settings
