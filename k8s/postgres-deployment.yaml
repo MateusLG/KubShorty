@@ -1,0 +1,46 @@
+# /k8s/postgres-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres # Este "rótulo" é como o Service vai encontrar este pod
+  template:
+    metadata:
+      labels:
+        app: postgres # O rótulo que o selector procura
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:15-alpine # A mesma imagem do docker-compose
+          ports:
+            - containerPort: 5432 # Porta interna do container
+          env:
+            # Puxamos os valores direto do .env (ou digitamos aqui)
+            - name: POSTGRES_USER
+              value: "postgres"
+            - name: POSTGRES_DB
+              value: "shorty_db"
+            # --- MÁGICA AQUI ---
+            # Dizemos ao K8s: "Pegue a chave 'POSTGRES_PASSWORD'
+            # do segredo 'postgres-secret' e coloque-a nesta
+            # variável de ambiente."
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_PASSWORD
+          volumeMounts:
+            # --- MAIS MÁGICA ---
+            # "Monte o 'disco' que pedimos (o PVC)
+            # dentro do container neste caminho."
+            - name: postgres-storage
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        # "Define o 'disco' que vamos usar"
+        - name: postgres-storage
+          persistentVolumeClaim:
+            claimName: postgres-pvc # O nome do PVC que criamos no arquivo anterior

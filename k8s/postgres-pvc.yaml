@@ -1,0 +1,11 @@
+# /k8s/postgres-pvc.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-pvc # Nome do "pedido de disco"
+spec:
+  accessModes:
+    - ReadWriteOnce # "Apenas um pod pode ler/escrever neste disco por vez"
+  resources:
+    requests:
+      storage: 1Gi # Estamos pedindo 1 Gigabyte de espaço
