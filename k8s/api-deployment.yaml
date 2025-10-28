@@ -1,0 +1,26 @@
+# /k8s/api-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: api # O "rótulo" deste pod
+  template:
+    metadata:
+      labels:
+        app: api # O "rótulo" que o selector procura
+    spec:
+      containers:
+        - name: api
+          image: kube-shorty-api:v1
+          imagePullPolicy: Never 
+          
+          ports:
+            - containerPort: 8000 # A porta que o Uvicorn usa
+          
+          envFrom:
+            - configMapRef:
+                name: api-config

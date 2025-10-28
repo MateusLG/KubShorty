@@ -1,0 +1,13 @@
+# /k8s/postgres-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-db # O HOSTNAME que a API está procurando!
+spec:
+  type: ClusterIP # Só acessível de dentro do cluster
+  selector:
+    app: postgres # Encontra os pods com o rótulo 'app: postgres'
+  ports:
+    - protocol: TCP
+      port: 5432 # A porta que o Service "ouve"
+      targetPort: 5432 # A porta do container para onde ele envia o tráfego

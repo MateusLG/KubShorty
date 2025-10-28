@@ -1,0 +1,12 @@
+# /k8s/api-configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: api-config
+data:
+  # O host do Redis é o nome do Service do Redis
+  REDIS_HOST: "redis-cache"
+  REDIS_PORT: "6379" # Portas são strings em ConfigMaps
+
+  # A string de conexão do Postgres
+  DATABASE_URL: "postgresql://postgres:mysecretpassword@postgres-db:5432/shorty_db"

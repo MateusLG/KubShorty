@@ -1,0 +1,13 @@
+# /k8s/api-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: api # Encontra os pods com o rótulo 'app: api'
+  ports:
+    - protocol: TCP
+      port: 80 # A porta que o LoadBalancer expõe (porta padrão HTTP)
+      targetPort: 8000 # A porta do nosso container (onde o Uvicorn roda)
