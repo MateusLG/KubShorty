@@ -78,7 +78,8 @@ kubectl port-forward <nome-do-pod-da-api> 8080:8000
 POST /encurtar Cria uma nova URL encurtada. Corpo (JSON):
 ```JSON
 {
-  "url_original": "[https://www.google.com](https://www.google.com)"
+  "url_original": "(https://www.google.com)"
 }
 ```
 - GET /{codigo_curto} Redireciona para a URL original correspondente. Exemplo: GET /aBcD12
+
